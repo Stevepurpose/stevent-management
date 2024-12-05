@@ -1,5 +1,5 @@
-from stevent_manager.db import profiler_collection, event_collection, event_manager_collection
-from stevent_manager.models import Profiler, EventManager, Event, Ticket
+from stevent_management.db import profiler_collection, event_collection, event_manager_collection
+from stevent_management.models import Profiler, EventManager, Event, Ticket
 import typer
 import csv
 from typing_extensions import Annotated

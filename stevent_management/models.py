@@ -9,7 +9,7 @@ import jwt
 from datetime import datetime, timedelta
 
 from typing import Optional
-from stevent_manager.db import counters_collection
+from stevent_management.db import counters_collection
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

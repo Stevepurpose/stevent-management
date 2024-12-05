@@ -1,67 +1,45 @@
-name: Upload Python Package
+name: Upload Python Package to PyPI when a Release is Created
 
 on:
   release:
-    types: [published]
-
-permissions:
-  contents: read
+    types: [created]
 
 jobs:
-  release-build:
+  pypi-publish:
+    name: Publish release to PyPI
     runs-on: ubuntu-latest
-
+    environment:
+      name: pypi
+      url: https://pypi.org/p/stevent-management # Replace <PYPI_PACKAGE_NAME> with your package name
+    permissions:
+      id-token: write
     steps:
+      # Checkout the repository code
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
+      # Install Poetry
       - name: Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
 
-      - name: Install dependencies with Poetry
+      # Install project dependencies
+      - name: Install dependencies
         run: |
           poetry install
 
-      - name: Build release distributions using Poetry
+      # Build the package with Poetry
+      - name: Build package
         run: |
-          poetry build  # This creates the dist directory with .tar.gz and .whl files
+          poetry build
 
-      - name: Upload distributions
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-dists
-          path: dist/
-
-  pypi-publish:
-    runs-on: ubuntu-latest
-    needs:
-      - release-build
-    permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
-      id-token: write
-
-    environment:
-      name: pypi
-      # OPTIONAL: uncomment and update to include your PyPI project URL in the deployment status:
-      # url: https://pypi.org/p/YOURPROJECT
-      #
-      # ALTERNATIVE: if your GitHub Release name is the PyPI project version string
-      # ALTERNATIVE: exactly, uncomment the following line instead:
-      # url: https://pypi.org/project/YOURPROJECT/${{ github.event.release.name }}
-
-    steps:
-      - name: Retrieve release distributions
-        uses: actions/download-artifact@v4
-        with:
-          name: release-dists
-          path: dist/
-
-      - name: Publish release distributions to PyPI
+      # Publish the package to PyPI
+      - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: dist/
-
+          packages-dir: dist/  # Specify the directory where the built distributions are located

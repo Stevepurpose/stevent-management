@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "stevent-manager"
-version = "0.0.3"
+name = "stevent-management"
+version = "0.0.1"
 description = "A CLI event management app"
 authors = ["stevepurpose <stevenpurpose@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
-stevent-manager = "stevent_manager.app:app"
+stevent-management = "stevent_management.app:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"
