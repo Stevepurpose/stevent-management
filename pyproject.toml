@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "stevent-manager"
-version = "0.0.2"
+version = "0.0.3"
 description = "A CLI event management app"
 authors = ["stevepurpose <stevenpurpose@gmail.com>"]
 readme = "README.md"
